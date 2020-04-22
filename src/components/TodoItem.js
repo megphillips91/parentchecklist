@@ -7,10 +7,8 @@ export class TodoItem extends Component {
     
     getStyle = () => {
         return {
-          background: '#f4f4f4',
-          padding: '10px',
-          borderBottom: '1px dotted #ccc',
-          fontWeight: (this.props.todo.mandatory) ? 'bold' : 'normal',
+          textTransform: 'capitalize',
+          fontWeight: (this.props.todo.mandatory) ? 'normal' : 'light',
           textDecoration: (this.props.todo.completed) ? 'line-through' : 'none'
         }
       }
@@ -23,28 +21,20 @@ export class TodoItem extends Component {
 
     render() {
 
-        const { description, mandatory} = this.props.todo;
+        const { date, subject, description} = this.props.todo;
 
-        if(mandatory){
-            return (
-                <div style={this.getStyle()} > 
+        return (
+            <div key={this.key} style={this.getStyle()} className="todo-item"> 
+                <p>
                     <input style={this.inputStyle()} type="checkbox" onChange={this.props.markComplete.bind(
-                        this, description
-                    )}/>  
-                    {description}
-                </div>
-            );
-        } else {
-            return (
-                <div style={this.getStyle()} > 
-                    <input style={this.inputStyle()} type="checkbox" onChange={this.props.markComplete.bind(
-                        this, description
-                        )}/>  
-                    {description}
-                </div>
-                
-            );
-        }
+                    this, description
+                    )}
+                    />  
+                    {date}
+                </p>
+                <span style={{fontWeight: 'bold'}}>{subject+': '}</span>{description}
+            </div>
+        );
         
     }
 }

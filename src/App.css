@@ -1,7 +1,152 @@
 * {
   margin: 0;
   padding: 0;
+  color: #666;
 }
+
+.container {
+  padding: 0;
+}
+
+/*
+DareToLearn Colors:
+light headline color: #00998F
+dark green: #003745
+body: #666
+
+*/
+
+.checklist-container {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: auto;
+  grid-gap: 20px;
+  display: grid;
+  max-width: 90%;
+  margin: 0 auto;
+  border: 1px solid #e5e5e5;
+  padding: 20px;
+}
+
+.checklist-container h2{
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.checklist {
+  padding: 20px;
+}
+
+.checklist > .todo-item {
+  border-bottom: 1px dashed #404040;
+}
+
+.checklist > .todo-item:last-child {
+  border-bottom: none;
+}
+
+.checklist > .todo-item {
+  padding: 20px 0
+}
+
+
+
+/* 
+=================
+for the form 
+=================*/
+form > div {
+  width: 90%;
+  margin: 0 auto;
+  display: block;
+}
+
+form {
+  margin: 20px;
+}
+
+input {
+  line-height: 2em;
+  margin: 0 auto;
+  width: 90%;
+}
+
+label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+input {
+box-sizing: border-box;
+margin: 0;
+font-family: inherit;
+overflow: visible;
+display: block;
+width: 100%;
+padding: .375rem .75rem;
+font-size: 1rem;
+line-height: 1.5;
+color: #495057;
+background-color: #fff;
+background-clip: padding-box;
+border: 1px solid #ced4da;
+border-radius: .25rem;
+transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+input[type="checkbox"] {
+  display: inline;
+  width: 20px;
+}
+
+input[type="file"]{
+box-sizing: border-box;
+margin: 0;
+overflow: visible;
+display: block;
+width: 100%;
+}
+
+.btn {
+--breakpoint-xs: 0;
+--breakpoint-sm: 576px;
+--breakpoint-md: 768px;
+--breakpoint-lg: 992px;
+--breakpoint-xl: 1200px;
+--font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+--font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+box-sizing: border-box;
+margin: 0;
+font-family: inherit;
+overflow: visible;
+text-transform: capitalize;
+display: inline-block;
+font-weight: 400;
+text-align: center;
+white-space: nowrap;
+vertical-align: middle;
+user-select: none;
+border: 1px solid transparent;
+padding: .375rem .75rem;
+font-size: 1rem;
+line-height: 1.5;
+border-radius: .25rem;
+transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+color: #fff;
+background-color: #003744;
+border-color: #003744;
+-webkit-appearance: button;
+cursor: pointer;
+}
+
+label {
+  line-height: 1em;
+  font-weight: bold;
+  font-size: 1.2 em;
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+/* ends form styling */
 
 @media screen and (min-width: 767px) {
 
