@@ -7,11 +7,10 @@ export class LessonPlan extends Component {
 
         return (
             <div className="todo-item"> 
-                <ul>
-                    <li>{dueDate} 
-                        <FontAwesomeIcon icon="fa-plus"></FontAwesomeIcon>
-                    </li>
-                </ul>
+                <div style={{listStyle: 'none', display: 'flex', justifyContent: 'space-between'}}>
+                        <p>{dueDate} </p>
+                        <FontAwesomeIcon icon="plus-square"></FontAwesomeIcon>
+                </div>  
             </div>
             
         )

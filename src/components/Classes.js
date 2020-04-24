@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Classroom from './Classroom.js';
-import Todos from './Todos.js';
+//import Todos from './Todos.js';
 
-export class Classes extends Component {
+export class ClassSections extends Component {
     render() {
         return this.props.classes.map( (classroom) => (
             <Classroom
@@ -15,4 +15,4 @@ export class Classes extends Component {
     }
 }
 
-export default Classes
+export default ClassSections

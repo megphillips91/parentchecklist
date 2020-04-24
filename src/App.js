@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faCalendarWeek, faCalendarDay } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faUser, faPlusSquare, faMinusSquare, faCalendarWeek, faCalendarDay, faHouseUser, faSchool, faHome } from '@fortawesome/free-solid-svg-icons';
 import { v4 as uuidv4 } from 'uuid';
-//import axios from 'axios';
+import axios from 'axios';
+import Masonry from 'react-masonry-css';
 import Header from './components/Header.js';
 import AddLessonPlan from './components/AddLessonPlan.js';
 import './App.css';
 import Classes from './components/Classes.js';
+import About from './components/pages/About.js';
+import School from './components/pages/School.js';
+import Footer from './components/Footer.js';
 
-library.add(faPlus, faCalendarWeek, faCalendarDay);
+library.add(faQuestionCircle, faUser, faPlusSquare, faMinusSquare, faCalendarWeek, faCalendarDay, faHouseUser, faSchool, faHome);
 
 /**
  * Parent Checklist Website
@@ -50,19 +55,50 @@ library.add(faPlus, faCalendarWeek, faCalendarDay);
 
 class App extends Component {
 
+  componentDidMount (){
+    let url = 'http://localhost:8888/parentchecklist/wp-json/simple-jwt-authentication/v1/token';
+
+    let body = {
+      "username":"admin",
+      "password":"N0ah2oo9"
+    }
+
+    axios.post( url, body)
+      .then(  response =>
+        this.setState({
+          authToken: response.data.token
+        })
+      );
+    
+    localStorage.setItem('parentchecklist-wp-authtoken', this.state.authToken);  
+  }
+
   state = {
+    showForm: false,
+    authToken: '',
+    wpUser: {
+      username: 'DareChecklist',
+      password: 'NCirYK*x6R^j%26bTk%yN0$$mX',
+    },
     //students
     students: [
       {
         id: uuidv4(),
         name: 'noah',
-        classes: [],
+        classrooms: [],
       },
       {
         id: uuidv4(),
         name: 'beau',
-        classes: []
+        classrooms: []
       },
+    ],
+    classrooms: [
+    ],
+    lessonPlans: [
+      //array of lessonPlans associated with thier cooresponding classrooms
+    ],
+    schools: [
     ],
     //classes is an array of lesson plans
     classes: 
@@ -70,7 +106,7 @@ class App extends Component {
       {
         id: 1,
         school: 'CHES',
-        grade: '4',
+        grade: '4th',
         teacher: 'Hooper',
         subject: 'Math and Social Studies',
         lessonPlans: [
@@ -80,7 +116,28 @@ class App extends Component {
             todos: [
               {
                 id: 1,
-                date: '04-01-2020',
+                date: '04-26-2020',
+                description: 'this is the assignment short description'
+              },
+              {
+                id: 2,
+                date: '04-26-2020',
+                description: 'this is the assignment short description'
+              },
+            ]
+          },
+          {
+            id: 1,
+            dueDate: '04-19-2020',
+            todos: [
+              {
+                id: 1,
+                date: '04-19-2020',
+                description: 'this is the assignment short description'
+              },
+              {
+                id: 2,
+                date: '04-19-2020',
                 description: 'this is the assignment short description'
               },
             ]
@@ -90,6 +147,17 @@ class App extends Component {
     ]// end classes array   
   };
 
+  addLessonPlan = (lessonPlan) => {
+    this.setState({
+        lessonPlans: [...this.state.lessonPlans, lessonPlan]
+    });
+  }
+
+  clickPlusSquare = () => {
+    this.setState(
+      {showForm: !this.state.showForm}
+    )
+  }
 
   markComplete = (description) => {
     this.setState(
@@ -104,14 +172,30 @@ class App extends Component {
   }
 
   render (){
+    
     return (
-      <div className="App">
-        <Header></Header>
-        <div className="container">
-          <AddLessonPlan lessonPlan={this.lessonPlan}></AddLessonPlan>
-          <Classes classes={this.state.classes}></Classes>
+      <Router>
+        <div className="App">
+        <Header  ></Header>
+        <Route exact path="/" render={props =>(
+                <React.Fragment>
+                  <div className="content-app" style={{padding: '30px'}}>
+                  <Masonry
+                    breakpointCols={{default: 3, 800: 1}}
+                    className="my-masonry-grid"
+                    columnClassName="my-masonry-grid_column"
+                    >
+                    <AddLessonPlan clickPlusSquare={this.clickPlusSquare} showForm={this.state.showForm} addLessonPlan={this.addLessonPlan}></AddLessonPlan>  
+                    <Classes showForm={this.state.showForm} classes={this.state.lessonPlans}></Classes>
+                  </Masonry>
+                  </div>
+                </React.Fragment>
+              )} />
+        <Route path="/school" component={School} />
+        <Route path="/about" component={About} />
         </div>
-      </div>
+        <Footer></Footer>
+      </Router>
     );
   }
   
