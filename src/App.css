@@ -100,6 +100,13 @@ header .primary-menu-icons > * {
   margin: 0 10px;
 }
 
+
+
+
+
+
+
+
 /* masonry layout */
 .my-masonry-grid {
   display: -webkit-box; /* Not needed if autoprefixing */
@@ -117,11 +124,21 @@ header .primary-menu-icons > * {
   margin-bottom: 30px;
 }
 
+.flex-container-space-around {
+  display: flex;
+  justify-content: space-around;
+}
+
 .checklist-container {
-  max-width: 90%;
   margin: 0 auto;
   border: 1px solid #e5e5e5;
-  padding: 20px;
+  min-height: 150px;
+}
+
+.entry-header {
+  background-color: #ccc;
+  text-transform: capitalize;
+  padding: 10px;
 }
 
 .checklist-container h2{
@@ -151,6 +168,7 @@ header .primary-menu-icons > * {
 =================
 for the form 
 =================*/
+/*
 form {
   margin: 20px auto;
   display: block;
@@ -236,6 +254,10 @@ label {
   margin-bottom: 5px;
   margin-top: 20px;
 }
+*/
+/* profile wizard */
+
+
 /* ends form styling */
 
 blockquote {
