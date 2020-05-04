@@ -3,7 +3,10 @@ import { FormControl, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export class ComboBox extends Component {
+    
+    
     render() {
+        
         return (
             <React.Fragment>
                 <FormControl margins="normal" >
@@ -11,10 +14,12 @@ export class ComboBox extends Component {
                 id={this.props.id}
                 options={this.props.options}
                 getOptionLabel={(option) => option.title}
-                renderInput={(params) => <TextField {...params} label={this.props.label} />}
+                renderInput={(params) => <TextField {...params} helperText={this.props.helperText} label={this.props.label} />}
+                value={this.props.inputValue}
                 onChange= {this.props.onChange}
-                defaultValue={this.props.defaultValue}
+
                 fullWidth={true}
+                
                 />
                 </FormControl>
             </React.Fragment>

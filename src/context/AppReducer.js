@@ -4,6 +4,12 @@ export default (state, action) => {
 
     switch (action.type){
 
+        case 'TOGGLE_LESSON_FORM':
+            return {
+                ...state,
+                showLessonForm: !state.showLessonForm
+            }
+
         case 'SET_SCHOOLS':
             return {
                 ...state,

@@ -9,15 +9,13 @@ export default function TheContent( {currentPage, schools, teachers, subjects, g
 
     const { profileIsSaved} = useContext(GlobalContext);
 
-    switch (currentPage){
+    switch (currentPage) {
 
+        case 'timeline': 
+            return (<Timeline></Timeline>)
+        
         default:
-            if(profileIsSaved === false){
-                return (<ProfilePage></ProfilePage>)
-            } else {
-                return (<Timeline></Timeline>)
-            }
-
+            return (<Timeline></Timeline>)
     }
 
 }

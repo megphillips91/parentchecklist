@@ -11,6 +11,7 @@ const initialState = {
   profileUserPhoto: '',
   profileUserName: '',
   profileStudents: [],
+  showLessonForm: false,
   teachers: [],
   schools: [],
   grades: [],
@@ -49,6 +50,10 @@ if (localStorage.getItem('parent-checklist_userPhoto')) {
 if (localStorage.getItem('parent-checklist_userType')) {
   initialState.profileUserType = localStorage.getItem('parent-checklist_userType');
 }
+if (localStorage.getItem('parent-checklist_students')) {
+  initialState.profileStudents =  JSON.parse(localStorage.getItem('parent-checklist_students'));
+}
+
 
 
 // Create context
@@ -56,6 +61,13 @@ export const GlobalContext = createContext(initialState);
 // Provider component
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
+
+  function toggleLessonForm(bool) {
+    dispatch({
+      type: 'TOGGLE_LESSON_FORM',
+      payload: bool
+    })
+  }
 
   function setProfileIsSaved(bool) {
     dispatch({
@@ -141,6 +153,7 @@ export const GlobalProvider = ({ children }) => {
       grades: state.grades,
       subjects: state.subjects,
       assignments: state.assignments,
+      showLessonForm: state.showLessonForm,
       deleteStudent,
       addStudent,
       setUserType,
@@ -150,7 +163,8 @@ export const GlobalProvider = ({ children }) => {
       setProfileIsSaved,
       saveLocalProfile,
       setSchools,
-      setClassrooms
+      setClassrooms,
+      toggleLessonForm
     }
   }>
     {children}

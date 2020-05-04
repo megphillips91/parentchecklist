@@ -61,7 +61,7 @@ class App extends Component {
     teachers: [],
     grades: [],
     subjects: [],
-    currentPage: 'home'
+    currentPage: 'Timeline'
   }
 
   componentDidMount(){

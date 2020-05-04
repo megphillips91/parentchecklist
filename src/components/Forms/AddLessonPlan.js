@@ -1,12 +1,13 @@
 import React, { useContext, useEffect }  from 'react';
-import { FormControl, TextField, Button } from '@material-ui/core';
-import { GlobalContext } from '../../context/GlobalState.js';
+import { FormControl, TextField, Button, Collapse } from '@material-ui/core';
+import { GlobalContext } from '../../context/GlobalState.js'  //'../ context/GlobalState.js';
+import ContentCard from '../../components/ContentCard.js';
 import ChooseWPTerm from '../formComponents/ChooseWPTerm';
 
 
 
 export default function AddLessonPlan(props) {
-    const { profileUserPhoto, profileUserName, teachers, grades } = useContext(GlobalContext);
+    const { profileUserPhoto, profileUserName, schools, subjects, teachers, grades, showLessonForm, toggleLessonForm } = useContext(GlobalContext);
 
     const state = {
         dueDate: '',
@@ -25,22 +26,16 @@ export default function AddLessonPlan(props) {
         e.preventDefault();
     }
 
+    const clickShowForm = e => {
+        toggleLessonForm()
+    }
     return (
-        
-        <div className="checklist-container" style={{flexBasis: '30%'}}>
-            <div className="entry-header" style={{display: 'flex', }}>
-                <img alt={profileUserName} src={profileUserPhoto} style={{height: '50px', marginRight: '10px'}}/>
-                <div>
-                    <h2 className="entry-title">New Checklist</h2>
-                    <h3 className="entry-subtitle">Due Date: {state.dueDate}</h3>
-                </div>
-            </div> 
-            <div className="entry-content" style={{maxHeight: '500px', overflow: 'auto', paddingRight: '20px'}}>
-                <ChooseWPTerm taxonomy="schools" data={props.schools}></ChooseWPTerm>
-                <ChooseWPTerm taxonomy="teachers" data={props.teachers}></ChooseWPTerm>
-                <ChooseWPTerm taxonomy="grades" data={props.grades}></ChooseWPTerm>
-                <ChooseWPTerm taxonomy="subjects" data={props.subjects}></ChooseWPTerm>
-                <FormControl margin="normal" fullWidth={true}>
+        <ContentCard
+            mainTitle="Post Assignments"
+            subTitle={state.teacher+' '+state.dueDate}
+        >
+            <div style={{maxHeight: "250px", overflow: 'scroll-y'}}>
+                <FormControl margin="normals" fullWidth={true}>
                     <TextField
                             fullWidth={true}
                             required
@@ -50,7 +45,7 @@ export default function AddLessonPlan(props) {
                             onChange={(e) => setLocalState(e)}
                             InputLabelProps={{
                                 shrink: true,
-                              }}
+                                }}
                         ></TextField>
                 </FormControl>
                 <FormControl margin="normal" fullWidth={true}>
@@ -63,7 +58,7 @@ export default function AddLessonPlan(props) {
                         onChange={(e) => setLocalState(e)}
                         InputLabelProps={{
                             shrink: true,
-                          }}
+                            }}
                     ></TextField>
                 </FormControl>
                 <FormControl margin="normal" fullWidth={true}>
@@ -76,6 +71,10 @@ export default function AddLessonPlan(props) {
                         onChange={(e) => setLocalState(e)}
                     ></TextField>
                 </FormControl>
+                <ChooseWPTerm taxonomy="schools" data={schools}></ChooseWPTerm>
+                <ChooseWPTerm taxonomy="teachers" data={teachers}></ChooseWPTerm>
+                <ChooseWPTerm taxonomy="grades" data={grades}></ChooseWPTerm>
+                <ChooseWPTerm taxonomy="subjects" data={subjects}></ChooseWPTerm>
                 <FormControl>
                 <Button 
                     variant="contained" 
@@ -85,6 +84,6 @@ export default function AddLessonPlan(props) {
 
                 </FormControl>
             </div>
-        </div>
+            </ContentCard>
     )
 }

@@ -73,6 +73,7 @@ body: #666
 /*=======================*/
 
 /* header */
+
 header div {
   font-size: 2em;
   align-self: center;
@@ -85,7 +86,7 @@ header {
   padding: 0 30px;
 }
 
-header button, header a {
+header button, header a, header span > img {
   font-size: 2rem;
   border: none;
   padding: none;

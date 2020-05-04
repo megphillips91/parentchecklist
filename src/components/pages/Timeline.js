@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '../../context/GlobalState.js';
+import AddLessonPlan from '../Forms/AddLessonPlan.js'
 import Classrooms from '../Classrooms.js'
 
 export default function Timeline() {
@@ -23,12 +24,18 @@ export default function Timeline() {
 
     })
 
-    if(assignments){
-        return null
+    if( assignments.length < 1 ){
+       return  (
+            <React.Fragment>
+                <AddLessonPlan></AddLessonPlan>
+            </React.Fragment>
+        )
     }
     return (
         <React.Fragment>
+            <AddLessonPlan></AddLessonPlan>
             <p>Classrooms go here</p>
+            <p>Lesson Plans go Here</p>
         </React.Fragment>
     )
 }

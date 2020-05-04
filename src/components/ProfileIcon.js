@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { GlobalContext } from '../context/GlobalState';
 
-export default function ProfileIcon( { userPhoto, userName }) {
-    if(userPhoto === ''){
+
+export default function ProfileIcon( ) {
+    const { profileUserName, profileUserPhoto} = useContext(GlobalContext);    
+
+    if(profileUserPhoto === ''){
         return (
             <React.Fragment>
                 <FontAwesomeIcon icon="user"></FontAwesomeIcon>
@@ -10,8 +14,8 @@ export default function ProfileIcon( { userPhoto, userName }) {
         )
     } else {
         return (
-            <div style={{width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', border: '1px solid #333'}}>
-                <img src={userPhoto} alt={userName} style={{width: '100%' }}/>
+            <div style={{selfAlign: 'center', width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', marginRight: '10px', position: 'relative'}}>
+                <img src={profileUserPhoto} alt={profileUserName} style={{width: '100%', position: 'absolute', top: '0'}}/>
             </div>
         )
     }
