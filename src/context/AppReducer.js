@@ -1,5 +1,21 @@
+import axios from 'axios';
+
 export default (state, action) => {
+
     switch (action.type){
+
+        case 'SET_SCHOOLS':
+            return {
+                ...state,
+                schools: action.payload
+            }
+
+        case 'SAVE_LOCAL_PROFILE':
+            
+            return {
+                ...state,
+                profileIsSaved: true
+            }      
         case 'SET_USER_TYPE':
             return {
                 ...state,
@@ -34,6 +50,9 @@ export default (state, action) => {
             return {...state,
                 profileStuudents: state.profileStudents.push(student)
             };
+        case 'SET_CLASSROOMS':
+            return state.classrooms = action.payload;
+
         default: 
             return state;
     }

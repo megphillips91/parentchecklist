@@ -1,178 +1,90 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import React, { useContext, useEffect }  from 'react';
+import { FormControl, TextField, Button } from '@material-ui/core';
+import { GlobalContext } from '../../context/GlobalState.js';
+import ChooseWPTerm from '../formComponents/ChooseWPTerm';
 
-export class AddLessonPlan extends Component {
 
-    state = {
-        student: '',
+
+export default function AddLessonPlan(props) {
+    const { profileUserPhoto, profileUserName, teachers, grades } = useContext(GlobalContext);
+
+    const state = {
+        dueDate: '',
+        postDate: '',
         school: '',
         teacher: '',
-        grade: '',
         subject: '',
-        dueDate: '',
-        file: '',
-        restUrl: 'http://localhost:8888/parentchecklist/wp-json/parent-checklist-rest/v1/uploads',
-        lessonPlan: '',
-        response: '',
+        grade: ''
     }
 
-    componentDidMount(){
-        this.setState({
-            authToken: localStorage.getItem('parentchecklist-wp-authtoken')
-        })
-    }
-
-    setFormValues = (e) => this.setState({ [e.target.name]: e.target.value});
-
-    stateSetFile = (e) => {  
-        this.setState(
-            {
-                file: e.target.files[0]
-            }
-        );
-    }
-
-    onSubmit = (e) => {
+    const onSubmit = e => {
         e.preventDefault();
-        //form body from state
-        let body = {
-            school: this.state.school,
-            teacher: this.state.teacher,
-            grade: this.state.grade,
-            dueDate: this.state.dueDate,
-            subject: this.state.subject,
-            file: this.state.file
-        };
-        //set up form data
-        let formdata = new FormData();
-        for (const property in body) {
-            formdata.append(property, body[property]);
-          }
-        //post and response
-        axios.post(this.state.restUrl, formdata, {
-            })
-            .then( res => {
-                this.setState({
-                    lessonPlan: res.data,
-                    response: res
-                })
-                
-            })
-        //bubble up the new lesson plan
-        this.props.addLessonPlan(this.state.lessonPlan);    
-        //clear state    
-        this.setState({
-            school: '',
-            teacher: '',
-            grade: '',
-            dueDate: '',
-            subject: '',
-            file: ''
-        })
-    }//end onsumbit
-
-    render() {
-        if(this.props.showForm === false){
-            return (
-                <div className="checklist-container">
-                    <div style={{display: 'flex', justifyContent: 'space-between'}} className="checklist">
-                        <h2>Add A Lesson Plan </h2>
-                        <h2><FontAwesomeIcon icon="plus-square" onClick={this.props.clickPlusSquare}></FontAwesomeIcon></h2>
-                    </div>
-                        
-                </div>
-            )
-        } else {
-            return (
-                <div className="checklist-container">
-                    <div style={{display: 'flex', justifyContent: 'space-between'}} className="checklist">
-                        <h2>Add A Lesson Plan </h2>
-                        <FontAwesomeIcon icon="minus-square" onClick={this.props.clickPlusSquare}></FontAwesomeIcon>
-                    </div>
-                    <form 
-                        onSubmit={this.onSubmit} 
-                        >
-                        <input 
-                            type="hidden" 
-                            value={uuidv4()}  
-                            name="id"
-                        />
-                        
-                        <label htmlFor="school">School</label>
-                        <input
-                            name="teacher"
-                            type="text"
-                            placeholder="Teacher"
-                            required 
-                            value={this.state.teacher}
-                            onChange={this.setFormValues}
-                        />
-                        
-                        <label htmlFor="grade">Grade</label>
-                        <input
-                            name="grade"
-                            type="number"
-                            placeholder="Grade"
-                            value={this.state.grade}
-                            onChange={this.setFormValues}
-                            required
-                        />
-                        
-                        <label htmlFor="teacher">Teacher</label>
-                        <input
-                            name="teacher"
-                            type="text"
-                            placeholder="Teacher"
-                            required 
-                            value={this.state.teacher}
-                            onChange={this.setFormValues}
-                        />
-                        
-                        <label htmlFor="subject">Subject</label>
-                        <input
-                            name="subject"
-                            type="text"
-                            placeholder="Subject"
-                            required 
-                            value={this.state.subject}
-                            onChange={this.setFormValues}
-                        />
-                        
-                        <label htmlFor="dueDate">DueDate</label>
-                        <input
-                            name="dueDate"
-                            type="date"
-                            placeholder="dueDate"
-                            required 
-                            value={this.state.dueDate}
-                            onChange={this.setFormValues}
-                        />
-                        
-                        <label htmlFor="filePath">Upload Lesson Plan</label>
-                        <input 
-                        name="filePath"
-                        type="file"
-                        accept="text/csv"
-                        onChange={this.stateSetFile}
-                        required
-                        />
-                        
-                        <input 
-                        name="save"
-                        type="submit"
-                        className="btn"
-                        value="save list"
-                        />
-                    </form>
-                </div>
-            ) //end return
-        } //end if
     }
+
+    const setLocalState = e => {
+        e.preventDefault();
+    }
+
+    return (
+        
+        <div className="checklist-container" style={{flexBasis: '30%'}}>
+            <div className="entry-header" style={{display: 'flex', }}>
+                <img alt={profileUserName} src={profileUserPhoto} style={{height: '50px', marginRight: '10px'}}/>
+                <div>
+                    <h2 className="entry-title">New Checklist</h2>
+                    <h3 className="entry-subtitle">Due Date: {state.dueDate}</h3>
+                </div>
+            </div> 
+            <div className="entry-content" style={{maxHeight: '500px', overflow: 'auto', paddingRight: '20px'}}>
+                <ChooseWPTerm taxonomy="schools" data={props.schools}></ChooseWPTerm>
+                <ChooseWPTerm taxonomy="teachers" data={props.teachers}></ChooseWPTerm>
+                <ChooseWPTerm taxonomy="grades" data={props.grades}></ChooseWPTerm>
+                <ChooseWPTerm taxonomy="subjects" data={props.subjects}></ChooseWPTerm>
+                <FormControl margin="normal" fullWidth={true}>
+                    <TextField
+                            fullWidth={true}
+                            required
+                            id="dueDate"
+                            label="Due Date"
+                            type="Date"
+                            onChange={(e) => setLocalState(e)}
+                            InputLabelProps={{
+                                shrink: true,
+                              }}
+                        ></TextField>
+                </FormControl>
+                <FormControl margin="normal" fullWidth={true}>
+                    <TextField
+                        fullWidth={true}
+                        required
+                        id="postDate"
+                        label="Assignment Date"
+                        type="Date"
+                        onChange={(e) => setLocalState(e)}
+                        InputLabelProps={{
+                            shrink: true,
+                          }}
+                    ></TextField>
+                </FormControl>
+                <FormControl margin="normal" fullWidth={true}>
+                    <TextField
+                        id="description"
+                        label="Description"
+                        multiline
+                        rows={5}
+                        variant="outlined"
+                        onChange={(e) => setLocalState(e)}
+                    ></TextField>
+                </FormControl>
+                <FormControl>
+                <Button 
+                    variant="contained" 
+                    type="submit"
+                    onSubmit={(e) => onSubmit(e)}
+                >Post</Button>
+
+                </FormControl>
+            </div>
+        </div>
+    )
 }
-
-
-export default AddLessonPlan

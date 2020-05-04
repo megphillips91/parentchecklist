@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 //import {BrowserRouter as Router, Route} from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faQuestionCircle, faUser, faPlusSquare, faMinusSquare, faCalendarWeek, faCalendarDay, faHouseUser, faSchool, faHome, faSignInAlt, faChalkboard } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faUser, faPlusSquare, faMinusSquare, faCalendarWeek, faCalendarDay, faHouseUser, faSchool, faHome, faSignInAlt, faChalkboard, faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 import { GlobalProvider } from './context/GlobalState.js'
 import Header from './components/Header.js';
+import TheContent from './components/TheContent.js'
 import './App.css';
-import ProfileForm from './components/Forms/ProfileForm.js';
-import Profile from './components/profile/Profile.js'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { grey, teal} from '@material-ui/core/colors';
+import axios from 'axios';
 
-library.add(faQuestionCircle, faUser, faPlusSquare, faMinusSquare, faCalendarWeek, faCalendarDay, faHouseUser, faSchool, faHome, faSignInAlt, faChalkboard);
+library.add(faQuestionCircle, faUser, faPlusSquare, faMinusSquare, faCalendarWeek, faCalendarDay, faHouseUser, faSchool, faHome, faSignInAlt, faChalkboard, faGlobeAmericas);
 
 const theme = createMuiTheme({
   palette: {
@@ -56,31 +56,42 @@ const theme = createMuiTheme({
 
 class App extends Component {
 
-  addLessonPlan = (lessonPlan) => {
-    this.setState({
-        lessonPlans: [...this.state.lessonPlans, lessonPlan]
-    });
+  state = {
+    schools: [],
+    teachers: [],
+    grades: [],
+    subjects: [],
+    currentPage: 'home'
   }
 
-  clickPlusSquare = () => {
-    this.setState(
-      {showForm: !this.state.showForm}
-    )
+  componentDidMount(){
+    
+      const promises = [];
+      promises.push(axios.get('http://localhost:8888/parentchecklist/wp-json/wp/v2/schools'));
+      promises.push(axios.get('http://localhost:8888/parentchecklist/wp-json/wp/v2/teachers'));
+      promises.push(axios.get('http://localhost:8888/parentchecklist/wp-json/wp/v2/grades'));
+      promises.push(axios.get('http://localhost:8888/parentchecklist/wp-json/wp/v2/subjects'));
+
+      Promise.all(promises).then( res => {
+          this.setState({
+            schools: res[0].data,
+            teachers: res[1].data,
+            grades: res[2].data,
+            subjects: res[3].data,
+          })
+      });
+  
   }
 
   render (){
-
       return (
       
         <GlobalProvider>
           <ThemeProvider theme={theme}>
             <Header></Header>
-
             <div className="flex-container-space-around" style={{padding: '30px'}}>
-              <ProfileForm></ProfileForm>  
-              <Profile></Profile>
+              <TheContent currentPage={this.state.currentPage}></TheContent>
             </div>
-
           </ThemeProvider>
         </GlobalProvider>
     );

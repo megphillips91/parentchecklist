@@ -141,6 +141,10 @@ header .primary-menu-icons > * {
   padding: 10px;
 }
 
+.entry-content {
+  padding: 10px;
+}
+
 .checklist-container h2{
   font-weight: bold;
   font-size: 18px;

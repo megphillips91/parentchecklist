@@ -13,6 +13,7 @@ export class ComboBox extends Component {
                 getOptionLabel={(option) => option.title}
                 renderInput={(params) => <TextField {...params} label={this.props.label} />}
                 onChange= {this.props.onChange}
+                defaultValue={this.props.defaultValue}
                 fullWidth={true}
                 />
                 </FormControl>

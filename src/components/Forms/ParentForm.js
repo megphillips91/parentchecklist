@@ -5,13 +5,13 @@ import { GlobalContext } from '../../context/GlobalState';
 
 
 export default function ParentForm( props ) {
-    const { addStudent } = useContext(GlobalContext);
+    const { addStudent, profileUserType } = useContext(GlobalContext);
 
     const addNewStudent = (e) => {
         addStudent(document.getElementById('add-student').value);
         document.getElementById('add-student').value = '';
     }
-    if(props.UserType === "parent"){
+    if(profileUserType === "parent"){
         return(
             <React.Fragment>
                     <FormControl margin="normal" fullWidth={true}>
@@ -31,9 +31,6 @@ export default function ParentForm( props ) {
             </React.Fragment> 
             )
     } else {
-        return (
-            <React.Fragment></React.Fragment>
-        );
+        return null
     }
-    
 }
