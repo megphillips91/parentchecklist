@@ -9,7 +9,7 @@ export default function ContentCard( {mainTitle, subTitle, children}) {
     return (
         <React.Fragment>
             <Card elevation={3} style={{flexBasis: '300px', flexShrink: '0', margin: '15px'}}>
-            <div className="entry-header" style={{display: 'flex', }}>
+            <div className="entry-header" style={{display: 'flex' }}>
                     <Avatar alt={profileUserName} src={profileUserPhoto} style={{marginRight: '10px'}}></Avatar>
                     <div>
                         <h2 className="entry-title">{mainTitle}</h2>

@@ -13,6 +13,16 @@ import axios from 'axios';
 library.add(faQuestionCircle, faUser, faPlusSquare, faMinusSquare, faCalendarWeek, faCalendarDay, faHouseUser, faSchool, faHome, faSignInAlt, faChalkboard, faGlobeAmericas);
 
 const theme = createMuiTheme({
+  typography: {
+    fontFamily: 'Quicksand, Arial',
+  },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [Quicksand],
+      },
+    },
+  },
   palette: {
     primary: teal,
     secondary: grey,

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { FormControl, TextField, InputAdornment } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GlobalContext } from '../../context/GlobalState';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 
 
 export default function ParentForm( props ) {
@@ -28,7 +29,7 @@ export default function ParentForm( props ) {
                         helperText="Add a new Student to your profile"
                         InputProps={{
                             endAdornment: <InputAdornment position="start">
-                                <FontAwesomeIcon icon="plus-square" onClick={addNewStudent}></FontAwesomeIcon>
+                                <AddBoxIcon onClick={addNewStudent} color="primary"/>
                             </InputAdornment>,
                         }}  
                     ></TextField> 
