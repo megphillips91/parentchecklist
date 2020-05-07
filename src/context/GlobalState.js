@@ -17,7 +17,8 @@ const initialState = {
   grades: [],
   subjects: [],
   assignments: [],
-  classrooms: [],
+  sections: [],
+  uniqueClassrooms: [],
   lessonPlans: [],
 }
 
@@ -27,6 +28,7 @@ promises.push(axios.get('http://localhost:8888/parentchecklist/wp-json/wp/v2/sch
 promises.push(axios.get('http://localhost:8888/parentchecklist/wp-json/wp/v2/grades'));
 promises.push(axios.get('http://localhost:8888/parentchecklist/wp-json/wp/v2/subjects'));
 promises.push(axios.get('http://localhost:8888/parentchecklist/wp-json/wp/v2/assignments'));
+promises.push(axios.get('http://localhost:8888/parentchecklist/wp-json/parent-checklist/v2/lesson-plans'));
 
 Promise.all(promises).then( res => {
 
@@ -35,8 +37,10 @@ Promise.all(promises).then( res => {
     initialState.grades =  res[2].data
     initialState.subjects =  res[3].data
     initialState.assignments = res[4].data
+    initialState.sections = Object.values(res[5].data.sections)
 
 });
+
 
 if (localStorage.getItem('parent-checklist_userName')) {
   initialState.profileUserName = localStorage.getItem('parent-checklist_userName');
@@ -132,14 +136,6 @@ export const GlobalProvider = ({ children }) => {
     })
   }
 
-  function setClassrooms(classrooms){
-    dispatch({
-      type: 'SET_CLASSROOMS',
-      payload: classrooms
-    })
-  }
-
-
   return (<GlobalContext.Provider value={
     {
       profileIsSaved: state.profileIsSaved,
@@ -153,6 +149,7 @@ export const GlobalProvider = ({ children }) => {
       grades: state.grades,
       subjects: state.subjects,
       assignments: state.assignments,
+      sections: initialState.sections,
       showLessonForm: state.showLessonForm,
       deleteStudent,
       addStudent,
@@ -163,8 +160,7 @@ export const GlobalProvider = ({ children }) => {
       setProfileIsSaved,
       saveLocalProfile,
       setSchools,
-      setClassrooms,
-      toggleLessonForm
+      toggleLessonForm,
     }
   }>
     {children}

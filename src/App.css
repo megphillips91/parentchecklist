@@ -28,6 +28,21 @@ h3 {
   color: #00998F;
   font-weight: bold;
 }
+
+@media (min-width: 480px) {                             
+
+  .MuiContainer-root {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+}
+
+.MuiCard-root{
+  flex-basis: 30%
+}
+
+
 .content-page {
   margin: 30px;
   display: flex;

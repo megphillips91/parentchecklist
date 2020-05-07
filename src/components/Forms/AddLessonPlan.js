@@ -31,11 +31,11 @@ export default function AddLessonPlan(props) {
     }
     return (
         <ContentCard
+            double={true}
             mainTitle="Post Assignments"
             subTitle={state.teacher+' '+state.dueDate}
         >
-            <div style={{maxHeight: "250px", overflow: 'scroll-y'}}>
-                <FormControl margin="normals" fullWidth={true}>
+                <FormControl margin="normal" fullWidth={true}>
                     <TextField
                             fullWidth={true}
                             required
@@ -77,13 +77,12 @@ export default function AddLessonPlan(props) {
                 <ChooseWPTerm taxonomy="subjects" data={subjects}></ChooseWPTerm>
                 <FormControl>
                 <Button 
-                    variant="contained" 
+                    variant="contained"
                     type="submit"
                     onSubmit={(e) => onSubmit(e)}
-                >Post</Button>
+                >post</Button>
 
                 </FormControl>
-            </div>
             </ContentCard>
     )
 }

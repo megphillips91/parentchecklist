@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Profile from '../profile/Profile.js';
 import ProfileForm from '../Forms/ProfileForm.js';
+import Classrooms from '../Classrooms.js';
+import { GlobalContext } from '../../context/GlobalState.js';
+import { FormHelperText } from '@material-ui/core';
 
 export default function ProfilePage() {
+    const { sections } = useContext(GlobalContext);
+
     return (
-        <React.Fragment>
+        <div style={{display: 'flex', flexWrap: "wrap", justifyContent: 'space-around', flexDirection: 'flex-start'}} >
             <ProfileForm></ProfileForm>
             <Profile></Profile>
-        </React.Fragment>
+            <Classrooms sections={sections}></Classrooms>
+        </div>
     )
 }

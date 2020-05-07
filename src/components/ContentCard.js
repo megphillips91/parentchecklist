@@ -1,5 +1,5 @@
 import React, { useContext }  from 'react';
-import { Paper, Avatar } from '@material-ui/core';
+import { Card, Avatar } from '@material-ui/core';
 import { GlobalContext } from '../context/GlobalState.js';
 
 export default function ContentCard( {mainTitle, subTitle, children}) {
@@ -8,7 +8,7 @@ export default function ContentCard( {mainTitle, subTitle, children}) {
 
     return (
         <React.Fragment>
-            <Paper elevation={3} style={{flexBasis: '30%'}}>
+            <Card elevation={3} style={{flexBasis: '300px', flexShrink: '0', margin: '15px'}}>
             <div className="entry-header" style={{display: 'flex', }}>
                     <Avatar alt={profileUserName} src={profileUserPhoto} style={{marginRight: '10px'}}></Avatar>
                     <div>
@@ -19,7 +19,7 @@ export default function ContentCard( {mainTitle, subTitle, children}) {
                 <div className="entry-content" style={{maxHeight: '500px', overflow: 'auto', paddingRight: '20px'}}>
                     {children}
                 </div> 
-            </Paper>     
+            </Card>     
         </React.Fragment>
     )
 }

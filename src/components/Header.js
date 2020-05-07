@@ -1,9 +1,7 @@
 import React, {useContext} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar } from '@material-ui/core';
-
 import { GlobalContext } from '../context/GlobalState';
-import ProfileIcon from './ProfileIcon.js'
 
 export default function Header() {
     const { profileUserName, profileUserPhoto} = useContext(GlobalContext);

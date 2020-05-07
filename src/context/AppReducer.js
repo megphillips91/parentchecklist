@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 
 export default (state, action) => {
 
@@ -56,8 +56,11 @@ export default (state, action) => {
             return {...state,
                 profileStuudents: state.profileStudents.push(student)
             };
-        case 'SET_CLASSROOMS':
-            return state.classrooms = action.payload;
+        case 'REDUCE_CLASSROOMS':
+            return {
+                ...state,
+                uniqueClassrooms: action.payload
+            } 
 
         default: 
             return state;

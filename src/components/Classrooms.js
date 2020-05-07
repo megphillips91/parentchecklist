@@ -1,16 +1,33 @@
-import React, { useContext } from 'react';
-import { GlobalContext } from '../context/GlobalState.js'
+import React, { useEffect, useState } from 'react';
+import ContentCard from '../components/ContentCard.js';
+import ClassAssignments from '../components/ClassAssignments.js';
+//import axios from 'axios';
 
-import Classroom from './Classroom.js'
 
-export default function Classrooms() {
-    const { classrooms } = useContext(GlobalContext);    
+export default function Classrooms({ sections }) {
+
+    /* We are going after all the promises 
+    * and storing them into the promises array 
+    * and I guess that is what we will send up to the state
+    */  
+
+
+  
 
     return (
-        classrooms.map( classroom => {
-            return <Classroom key={classroom.id} classroom={classroom}></Classroom>
+        sections.map( (section, index) => {
+            return (
+                <ContentCard
+                    key={index}
+                    mainTitle={section.schools+" "+ section.teachers}
+                    subTitle={section.grades+" "+ section.subjects}
+                >
+                    <ClassAssignments 
+                        section={section}
+                        ></ClassAssignments>
+                </ContentCard>
+            )
         })
     )
+   
 }
-
-
