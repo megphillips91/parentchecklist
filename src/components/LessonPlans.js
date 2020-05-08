@@ -1,14 +1,23 @@
-import React, { Component } from 'react';
-import LessonPlan from './LessonPlan.js'
+import React from 'react';
+import { List, ListItem} from '@material-ui/core';
 
-export class LessonPlans extends Component {
-    render() {
-        return this.props.lessonPlans.map( (lessonPlan) => (
-            <LessonPlan
-                lessonPlan={lessonPlan}
-            ></LessonPlan>
-        ));
+
+export default function LessonPlans( {lessonplans} ) {
+    if(lessonplans === 'undefined'){
+        console.log('the props lesson plan is null so returned null')
+        return null
+    } else {
+        return(
+            lessonplans.map( lessonplan => {
+                return (
+                    <ListItem>
+                        <h3>{lessonplan.dueDate}</h3>
+                    </ListItem>
+                )
+            })
+        )
+        
+        
     }
+    
 }
-
-export default LessonPlans

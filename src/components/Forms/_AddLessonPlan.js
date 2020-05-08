@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export class AddLessonPlan extends Component {
 
@@ -102,12 +104,12 @@ export class AddLessonPlan extends Component {
                         
                         <label htmlFor="school">School</label>
                         <input
-                            name="school"
+                            name="teacher"
                             type="text"
-                            placeholder="School"
-                            value={this.state.school}
+                            placeholder="Teacher"
+                            required 
+                            value={this.state.teacher}
                             onChange={this.setFormValues}
-                            required
                         />
                         
                         <label htmlFor="grade">Grade</label>
