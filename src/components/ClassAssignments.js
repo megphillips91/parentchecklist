@@ -1,72 +1,52 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { makeStyles } from '@material-ui/core/styles';
-import { List, ListItem, ListItemText, ListItemIcon, Icon} from '@material-ui/core';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import { GlobalContext } from '../context/GlobalState.js';
+import { List, ListItem, ListItemText, ListItemIcon, Dialog, DialogTitle, DialogContent} from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
+import Assignment from '../components/Assignment.js';
+import { makeStyles } from '@material-ui/core/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import DialogActions from '@material-ui/core/DialogActions';
-import Dialog from '@material-ui/core/Dialog';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { GlobalContext } from '../context/GlobalState.js';
 
 
 export default function ClassAssignments( { section } ) {
-    const { setUserStudents  } = useContext(GlobalContext);
-    const { openSaveToStudent, setOpenSaveToStudent } = useState(false);
+    const [ lessons, setLessonPlans ] = useState([]);
 
 
-
-
-    
-
-    const [ lessonPlans, setLessonPlans ] = useState([]);
-    const [open, setOpen] = useState({});
-
-    const followLessonPlan = (lessonArgs) => {
-        console.log(lessonArgs);
-    }
-
-    useEffect( () => {
-
-    }, []);
-
+    /* Make API Call */
     useEffect(() => {
         let ignore = false;
-        let url = 'http://localhost:8888/parentchecklist/wp-json/parent-checklist/v2/lesson-plans';
-        let body = {
-            teachers: section.teachers,
-            grades: section.grades,
-            schools: section.schools,
-            subjects: section.subjects
-        }
-        console.log(body);
+        
+        //console.log(body);
 
         async function fetchData() {
-            const result = await axios.post(url, body);
-            const { assignments } = result.data;  
+            let url = 'http://localhost:8888/parentchecklist/wp-json/parent-checklist/v2/lesson-plans';
+            let body = {
+                show_assignments: true,
+                teachers: section.teachers,
+                grades: section.grades,
+                subjects: section.subjects
+            }
+            let formdata = new FormData();
+            for (const property in body) {
+                formdata.append(property, body[property]);
+            }
+            const result = await axios.post(url, formdata, )
             
-            let plans = [];
-            for (let [key, value] of Object.entries(assignments)) {
-                    const lessonplan = value;
-                    lessonplan.dueDate = key;
-                    plans.push(lessonplan);
-                }
-            if (!ignore) setLessonPlans(plans);
+            if (!ignore) setLessonPlans(result.data.assignments);
         }
 
         fetchData();
         return () => { ignore = true; }
-        }, []);
+    }, []);
 /**
  * Under here is the render.
  */
-    if(lessonPlans === 'undefined'){
+    if(lessons === 'undefined' || lessons.length === 0 ){
         return (
         <React.Fragment>
             <List >
@@ -74,33 +54,27 @@ export default function ClassAssignments( { section } ) {
         </React.Fragment>
         )
     } else {
-
+        const { posts } = lessons.assignments;
+                
         return (
-
             <List>{
-               lessonPlans.map( (lessonplan, index) => {
-                   let week = moment(lessonplan.dueDate).format("[Week] W[:]");
-                   let theDate = moment(lessonplan.dueDate).format("[ Due] MM-DD-YYYY");
-                   
-                   return (
-                    <ListItem key={index} button>
-                        <ListItemText>
-                        <h6>{week}</h6><p>{theDate}</p>
-                        </ListItemText>
-                        <ListItemIcon >
-                            <FontAwesomeIcon icon="chalkboard" onClick={lessonplan.assignments} style={{color: '#003745'}}></FontAwesomeIcon>
-                        </ListItemIcon>
-                    </ListItem>
+                    posts.map( post => {
+                    return (
+                        <React.Fragment key={"fragment"+post.ID}>
+                        <ListItem key={post.ID} button>
+                            <ListItemText>
+                                <h6>{moment(post.post_date).format('MM-DD')}</h6>
+                                <p style={{textTransform: 'capitalize'}}>{post.post_title}</p>
+                            </ListItemText>
+                            <ListItemIcon >
+                                <FontAwesomeIcon key={"parent-checklist/lessons/"+post.ID} icon="chalkboard" style={{color: '#003745'}}></FontAwesomeIcon>
+                            </ListItemIcon>
+                        </ListItem>
+                        </React.Fragment>
                     )
                  })
                 }
             </List>
         )
     }
-    
-    
-    
-
-
-    
 }
