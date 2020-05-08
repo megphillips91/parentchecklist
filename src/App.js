@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
-//import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faEye, faQuestionCircle, faUser, faPlusSquare, faMinusSquare, faCalendarWeek, faCalendarDay, faHouseUser, faSchool, faHome, faSignInAlt, faChalkboard, faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
+import { faDoorOpen, faTimes, faWindowClose, faEye, faQuestionCircle, faUser, faPlusSquare, faMinusSquare, faCalendarWeek, faCalendarDay, faHouseUser, faSchool, faHome, faSignInAlt, faChalkboard, faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 import { GlobalProvider } from './context/GlobalState.js'
 import Header from './components/Header.js';
-import TheContent from './components/TheContent.js'
 import './App.css';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { grey, teal} from '@material-ui/core/colors';
 import axios from 'axios';
-import TheAppBar from './components/TheAppBar.js';
-import { CssBaseline, BottomNavigation } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
+import Timeline from './components/pages/Timeline.js'
+import Classrooms from './components/Classrooms.js'
 
-library.add(faEye, faQuestionCircle, faUser, faPlusSquare, faMinusSquare, faCalendarWeek, faCalendarDay, faHouseUser, faSchool, faHome, faSignInAlt, faChalkboard, faGlobeAmericas);
+library.add(faDoorOpen, faTimes, faWindowClose, faEye, faQuestionCircle, faUser, faPlusSquare, faMinusSquare, faCalendarWeek, faCalendarDay, faHouseUser, faSchool, faHome, faSignInAlt, faChalkboard, faGlobeAmericas);
 
 const theme = createMuiTheme({
   typography: {
@@ -31,9 +31,6 @@ const theme = createMuiTheme({
     primary: teal,
     secondary: grey,
   },
-  visibilityIcon: {
-    color: '#4db6ac'
-  }
 });
 /**
  * Parent Checklist Website
@@ -108,7 +105,7 @@ class App extends Component {
             <CssBaseline />
             <Header></Header>
               <div className="flex-container-space-around" style={{padding: '30px'}}>
-                <TheContent currentPage={this.state.currentPage}></TheContent>
+                <Timeline className="flex-container-space-around"></Timeline>
               </div>
           </ThemeProvider>
         </GlobalProvider>

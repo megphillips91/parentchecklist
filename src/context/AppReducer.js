@@ -44,6 +44,7 @@ export default (state, action) => {
             }      
         case 'DELETE_STUDENT':
             state.profileStudents.splice(action.payload, 1);
+            localStorage.setItem('parent-checklist_students', JSON.stringify(state.profileStudents));
             return {
                 ...state,
                 profileStudents: state.profileStudents

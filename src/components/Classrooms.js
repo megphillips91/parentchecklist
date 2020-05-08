@@ -11,9 +11,6 @@ export default function Classrooms({ sections }) {
     * and I guess that is what we will send up to the state
     */  
 
-
-  
-
     return (
         sections.map( (section, index) => {
             return (
@@ -21,6 +18,7 @@ export default function Classrooms({ sections }) {
                     key={index}
                     mainTitle={section.schools+" "+ section.teachers}
                     subTitle={section.grades+" "+ section.subjects}
+                    button="door-open"
                 >
                     <ClassAssignments 
                         section={section}

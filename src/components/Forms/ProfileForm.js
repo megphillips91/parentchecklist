@@ -8,7 +8,7 @@ import ParentForm from './ParentForm.js'
 
 
 export default function ProfileForm () {
-    const { profileUserType, setUserType } = useContext(GlobalContext);
+    const { profileUserType, setUserType, profileIsSaved } = useContext(GlobalContext);
 
     const onSelectUserType = (event, key, payload) => {
             setUserType(key.value);
@@ -25,7 +25,10 @@ export default function ProfileForm () {
     return (
       <ContentCard
         mainTitle="ManageProfile"
+        button="times"
       >
+        <form style={{padding: '10px'}}>
+
         <FormControl margin="normal" fullWidth={true}>
             <ComboBox 
             id="user-type" 
@@ -37,7 +40,8 @@ export default function ProfileForm () {
             ></ComboBox>
         </FormControl> 
         <ParentForm userType={profileUserType}></ParentForm>
-        <MyGoogleLogin></MyGoogleLogin>
+          { (profileIsSaved) ? null : <MyGoogleLogin></MyGoogleLogin>}
+        </form>
       </ContentCard>
     )
 }

@@ -11,6 +11,7 @@ export default function Profile() {
         <ContentCard
             mainTitle={profileUserName}
             subtitle={profileUserType+' '+profileStudents.length+' Students'}
+            button="times"
             >{
                 profileStudents.map( (student, index) => {  
                     return  <ProfileStudent key={index} student={student} arrayIndex={index}></ProfileStudent>

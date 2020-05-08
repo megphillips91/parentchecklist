@@ -26,15 +26,14 @@ export default function AddLessonPlan(props) {
         e.preventDefault();
     }
 
-    const clickShowForm = e => {
-        toggleLessonForm()
-    }
     return (
         <ContentCard
             double={true}
             mainTitle="Post Assignments"
             subTitle={state.teacher+' '+state.dueDate}
+            button="times"
         >
+            <form style={{padding: '10px'}}>
                 <FormControl margin="normal" fullWidth={true}>
                     <TextField
                             fullWidth={true}
@@ -83,6 +82,7 @@ export default function AddLessonPlan(props) {
                 >post</Button>
 
                 </FormControl>
+                </form>
             </ContentCard>
     )
 }
